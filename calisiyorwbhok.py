@@ -8,6 +8,7 @@ import logging
 from telegram import Update
 from telegram import Bot
 import urllib3
+server-app.server
 
 proxy_url = "http://8.209.114.72:3129"
 telepot.api._pools = {
