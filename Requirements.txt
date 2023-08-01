@@ -1,6 +1,1 @@
-upgrade
-pip
-re
-requests
-Telegram
-telepot
+
