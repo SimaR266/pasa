@@ -1,5 +1,5 @@
-telepot
+
 requests
-urllib3
+logging
 flask
 python-telegram-bot
