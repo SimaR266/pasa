@@ -1,3 +1,5 @@
+upgrade
+pip
 re
 requests
 Telegram
