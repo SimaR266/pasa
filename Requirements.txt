@@ -2,4 +2,4 @@ telepot
 requests
 urllib3
 flask
-telegram
+python-telegram-bot
