@@ -8,7 +8,7 @@ import logging
 from telegram import Update
 from telegram import Bot
 import urllib3
-server-app.server
+gunicorn app:app & python3 calisiyorwbhok.py
 
 proxy_url = "http://8.209.114.72:3129"
 telepot.api._pools = {
