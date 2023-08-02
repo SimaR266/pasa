@@ -1,6 +1,7 @@
 
 import logging
 from flask import Flask, request
+import telegram
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Flask uygulamasını başlatın
@@ -28,9 +29,9 @@ message_handler = MessageHandler(Filters.text & (~Filters.command), handle_messa
 dispatcher.add_handler(message_handler)
 
 # Flask HTTP webhook'u etkinleştirme
-@app.route('https://pasa-yol.onrender.com/', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
+    update = telegram.Update.de_json(request.get_json(force=True), updater.bot)
     dispatcher.process_update(update)
     return 'ok'
 
