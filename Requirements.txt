@@ -2,3 +2,4 @@ requests
 logging
 flask
 python-telegram-bot
+gunicorn
