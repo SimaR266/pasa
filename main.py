@@ -13,7 +13,7 @@ def hello(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Selam!")
 
 def main():
-    token = 'YOUR_TELEGRAM_BOT_TOKEN'
+    token = '5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ'
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)
@@ -21,7 +21,7 @@ def main():
     hello_handler = CommandHandler('hello', hello)
     dispatcher.add_handler(hello_handler)
 
-    port = int(os.environ.get("PORT", 10000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
