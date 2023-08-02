@@ -1,7 +1,7 @@
-
 import logging
 from flask import Flask
 from telegram.ext import Updater, CommandHandler
+import os
 
 # Flask uygulamasını başlatın
 app = Flask(__name__)
@@ -30,9 +30,9 @@ def main():
     dispatcher.add_handler(hello_handler)
 
     # Botu başlatın
-    updater.start_polling()
+    port = int(os.environ.get("PORT", 5000))  # Portu alın veya varsayılan olarak 5000 kullanın
+    app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)  # Günlüğü yapılandırın
     main()
-
-
