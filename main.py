@@ -1,6 +1,10 @@
 
 import logging
+from flask import Flask
 from telegram.ext import Updater, CommandHandler
+
+# Flask uygulamasını başlatın
+app = Flask(__name__)
 
 # Botun başlamasını sağlayan komut işleyicisi
 def start(update, context):
@@ -25,11 +29,11 @@ def main():
     hello_handler = CommandHandler('hello', hello)
     dispatcher.add_handler(hello_handler)
 
-    # Botu çalıştırın
+    # Botu başlatın
     updater.start_polling()
 
-    # Botun sürekli çalışmasını sağlayın
-    updater.idle()
-
 if __name__ == '__main__':
-    main()
+    # Flask uygulamasını çalıştırın
+    app.run(host='0.0.0.0', port=5000)
+
+
