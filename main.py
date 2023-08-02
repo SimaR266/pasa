@@ -30,7 +30,7 @@ def main():
     dispatcher.add_handler(hello_handler)
 
     # Botu başlatın
-    port = int(os.environ.get("PORT", 5000))  # Portu alın veya varsayılan olarak 5000 kullanın
+    port = int(os.environ.get("PORT", 100000))  # Portu alın veya varsayılan olarak 5000 kullanın
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
