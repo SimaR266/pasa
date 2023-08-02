@@ -33,7 +33,6 @@ def main():
     updater.start_polling()
 
 if __name__ == '__main__':
-    # Flask uygulamasını çalıştırın
-    app.run(host='0.0.0.0', port=5000)
+    main()
 
 
