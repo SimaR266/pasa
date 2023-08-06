@@ -1,23 +1,26 @@
 from flask import Flask, request
-from telegram.ext import Updater, CommandHandler
+import requests
 
 app = Flask(__name__)
-updater = Updater(token='5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ', use_context=True)
-dispatcher = updater.dispatcher
+
+def send_message(chat_id, text):
+    token = '5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ'
+    url = f'https://api.telegram.org/bot{token}/sendMessage'
+    data = {'chat_id': chat_id, 'text': text}
+    response = requests.post(url, json=data)
+    return response.json()
 
 @app.route('https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc', methods=['POST'])
 def webhook():
     if request.method == 'POST':
         update = request.get_json()
-        text = update['message']['text']
         chat_id = update['message']['chat']['id']
+        text = update['message']['text']
 
         if text.lower() == 'merhaba':
-            updater.bot.send_message(chat_id=chat_id, text='Selam!')
+            send_message(chat_id, 'Selam!')
 
         return 'ok'
 
 if __name__ == '__main__':
-    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path='YOUR_WEBHOOK_URL', webhook_url='https://YOUR_APP_URL/YOUR_WEBHOOK_URL')
-    updater.bot.set_webhook('https://YOUR_APP_URL/YOUR_WEBHOOK_URL')
     app.run(threaded=True)
