@@ -4,4 +4,4 @@ beautifulsoup4==4.9.1
 Flask==2.1.0
 gunicorn
 pyTelegramBotAPI==3.7.3
-telegram
+python-telegram-bot
