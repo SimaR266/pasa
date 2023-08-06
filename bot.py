@@ -8,7 +8,7 @@ import traceback
 import gunicorn
 
 
-TOKEN =  os.environ['5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ']
+TOKEN =  os.environ['TOKEN']
 WEBHOOK = os.environ['WEBHOOK']
 
 
