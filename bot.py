@@ -11,54 +11,43 @@ TOKEN =  os.environ['TOKEN']
 WEBHOOK = os.environ['WEBHOOK']
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
+bot = Bot(bot_token)
+app = Flask(__name__)
 
-@bot.message_handler(commands=["start"])
-def start(message):
-    cid = message.chat.id
-    bot.send_message(cid, "Hola!\nEste bot te permitirá comprobar el estado de tus listas mediante la API de Xtream Codes.\nPara comprobar tu lista tan solo tienes que enviarme el enlace y yo te mostraré toda la información\n\nBot desarrollado por @APLEONI\nhttps://github.com/adrianpaniagualeon/iptv-checker")
+def start_handler(update: Update, context):
+    message = "Bot devrede!"
+    chat_id = update.effective_chat.id
+    bot.send_message(chat_id=chat_id, text=message)
 
-@bot.message_handler(func=lambda message: True)
-def echo_message(message):
+def yan_handler(update: Update, context):
+    url = update.message.text.split()[1]
+    if not url.startswith('http://') and not url.startswith('https://'):
+        url = 'https://' + url
+
     try:
-        numero_streams = 0
-        cid = message.chat.id
-        url = message.text
-        url = url.replace('get.php', 'panel_api.php')
-        respuesta = requests.get(url)
-        open('respuesta.json', 'wb').write(respuesta.content)
-        f = open('respuesta.json')
-        json_file = json.load(f)
-        json_str = json.dumps(json_file)
-        resp = json.loads(json_str)
-        if 'user_info' in resp:
-            username = resp['user_info'].get('username', '')
-            password = resp['user_info'].get('password', '')
-            status = resp['user_info'].get('status', '')
-            expire_dates = resp['user_info'].get('exp_date', None)
+        response = requests.get(url)
+        if response.status_code == 200:
+            message = f"Bağlantı Çalışıyor!\n\nKullanıcı Adı: <SENİN_KULLANICI_ADI>\nParola: <SENİN_PAROLA>"
+        else:
+            message = "URL pasif!"
+    except requests.exceptions.RequestException as e:
+        message = f"Hata oluştu: {str(e)}"
 
-            if expire_dates is not None:
-                expire_date = datetime.fromtimestamp(int(expire_dates))
-                expirate = True
+    chat_id = update.effective_chat.id
+    bot.send_message(chat_id=chat_id, text=message)
 
-                expire_year = expire_date.strftime("%Y")
-                expire_month = expire_date.strftime("%m")
-                expire_day = expire_date.strftime("%d")
-            else:
-                expirate = False
+@app.route('/{}'.format(secret), methods=["POST"])
+def webhook():
+    update = Update.de_json(request.get_json(force=True), bot)
+    try:
+        updater.dispatcher.process_update(update)
+    except Exception as e:
+        print(f"Hata: {str(e)}")
+    return 'ok'
 
-            creates_dates = resp['user_info'].get('created_at', '')
-            create_date = datetime.fromtimestamp(int(creates_dates))
-            create_year = create_date.strftime("%Y")
-            create_month = create_date.strftime("%m")
-            create_day = create_date.strftime("%d")
-
-            a_connections = resp['user_info'].get('active_cons', '')
-            m_connections = resp['user_info'].get('max_connections', '')
-
-            if 'available_channels' in resp:
-                for stream in resp['available_channels']:
-                    numero_streams += 1
-
+updater = Updater(bot_token, use_context=True)
+updater.dispatcher.add_handler(CommandHandler('start', start_handler))
+updater.dispatcher.add_handler(CommandHandler('yan', yan_handler))
             if 'server_info' in resp:
                 url_server = resp['server_info'].get('url', '')
                 port_server = resp['server_info'].get('port', '')
