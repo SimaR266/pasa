@@ -10,12 +10,12 @@
    ],
    "env":{
       "TOKEN":{
-         "description":"TELEGRAM BOT TOKEN",
+         "description":"5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ",
          "value":"5"
       },
       "WEBHOOK": {
       "description": "HEROKU APP URL",
-      "value": "https://yourappname.herokuapp.com/"
+      "value": "https://pasa-yol.onrender.com"
     }
    }
 }
