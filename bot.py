@@ -7,9 +7,8 @@ import os
 from datetime import datetime
 import traceback
 
-TOKEN = os.environ['5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ']
-WEBHOOK = os.environ['https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc']
-
+TOKEN =  os.environ['TOKEN']
+WEBHOOK = os.environ['WEBHOOK']
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
