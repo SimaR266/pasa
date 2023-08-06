@@ -2,7 +2,7 @@ from flask import Flask, request
 import telegram
 
 app = Flask(__name__)
-bot = telegram.Bot(token='BOT_TOKEN')
+bot = telegram.Bot(token='5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ')
 
 @app.route('https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc', methods=['POST'])
 def webhook():
