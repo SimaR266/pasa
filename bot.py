@@ -1,13 +1,15 @@
 from flask import Flask, request
 import requests
+import json
 
 app = Flask(__name__)
 
 def send_message(chat_id, text):
-    token = '5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ'
-    url = f'https://api.telegram.org/bot{token}/sendMessage'
+    token = "5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ"
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    headers = {'Content-Type': 'application/json'}
     data = {'chat_id': chat_id, 'text': text}
-    response = requests.post(url, json=data)
+    response = requests.post(url, headers=headers, json=data)
     return response.json()
 
 @app.route('/https://pasa-yol.onrender.com', methods=['POST'])
