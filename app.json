@@ -10,8 +10,8 @@
    ],
    "env":{
       "TOKEN":{
-         "description":"5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ",
-         "value":"5"
+         "description":"BOT TOKEN",
+         "value":"5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ"
       },
       "WEBHOOK": {
       "description": "HEROKU APP URL",
