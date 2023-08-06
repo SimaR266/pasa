@@ -10,7 +10,7 @@ def send_message(chat_id, text):
     response = requests.post(url, json=data)
     return response.json()
 
-@app.route('https://pasa-yol.onrender.com', methods=['POST'])
+@app.route('/https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc', methods=['POST'])
 def webhook():
     if request.method == 'POST':
         update = request.get_json()
