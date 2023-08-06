@@ -1,32 +1,22 @@
-
+from flask import Flask, request
 import telegram
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
 
-# Telegram botunuzun token'ını buraya girin
-TOKEN = '5761864354:AAGbpgsIe3Nyp-FzRDylpkzN3lMXCS283SQ'
+app = Flask(__name__)
+bot = telegram.Bot(token='BOT_TOKEN')
 
-def start(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Merhaba!")
+@app.route('https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc', methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        update = telegram.Update.de_json(request.get_json(force=True), bot)
+        chat_id = update.message.chat_id
+        text = update.message.text
 
-def main():
-    # Telegram botunuzun updater nesnesini oluşturun
-    updater = Updater(token=TOKEN, use_context=True)
-    dispatcher = updater.dispatcher
-    
-    # Botunuza "/start" komutuna yanıt verecek bir işleyici ekleyin
-    start_handler = CommandHandler('start', start)
-    dispatcher.add_handler(start_handler)
-    
-    # Webhook URL'nizi buraya yapıştırın
-    WEBHOOK_URL = 'https://api.render.com/deploy/srv-cj4af02ip7vuask3tcfg?key=qiWPDsXBCuc'
-    
-    # Botunuza web hook adresini ayarlayın
-    updater.start_webhook(listen="0.0.0.0", port=8443, url_path=TOKEN)
-    updater.bot.set_webhook(url=WEBHOOK_URL + '/' + TOKEN)
-    
-    # Botu başlatın
-    updater.idle()
+        # Eğer gelen mesaj "merhaba" ise "selam" cevabını veriyoruz
+        if text.lower() == 'merhaba':
+            bot.sendMessage(chat_id=chat_id, text='Selam!')
+
+        return 'ok'
 
 if __name__ == '__main__':
-    main()
+    # Flask uygulamasını çalıştırırken webhook URL'sini uygulamanızın URL'si olarak ayarlayın
+    app.run(threaded=True)
