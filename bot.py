@@ -1,13 +1,15 @@
 import requests
 from flask import Flask, request
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import CallbackContext, Filters, MessageHandler, Updater
+from telegram.ext import CallbackContext, Filters, MessageHandler, Updater, CommandHandler, CallbackQueryHandler
 
 app = Flask(__name__)
 TELEGRAM_API_TOKEN = '6645176714:AAFL8GakKy37Tfqo4M_M2NF0085Z-hU8MEM'
+YOUR_WEBHOOK_PATH = '/https://pasa-yol.onrender.com'
+PORT = 8000
 
 def is_m3u_link(url):
-    # Burada isterseniz M3U linkini kontrol edebilirsiniz
+    # Burada M3U linkini kontrol edebilirsiniz
     # Örneğin, requests.get() kullanarak bağlantının çekilebilirliğini kontrol edebilirsiniz
     # Sadece örnekte M3U formatına uygun olduğunu varsayıyoruz
     # Eğer link geçerli ise True, değilse False döndürürüz
@@ -37,7 +39,7 @@ def handle_button_click(update: Update, context: CallbackContext):
     else:
         update.callback_query.message.reply_text("Bağlantı pasif!")
 
-@app.route('/https://pasa-yol.onrender.com', methods=['POST'])
+@app.route(YOUR_WEBHOOK_PATH, methods=['POST'])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
     dp.process_update(update)
@@ -49,6 +51,6 @@ if __name__ == '__main__':
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_handler(CallbackQueryHandler(handle_button_click))
     dp.add_handler(CommandHandler('start', start))
-    app.run(port=8000)
-    bot.start_polling()
-    bot.idle()
+    bot.start_webhook(listen="0.0.0.0", port=PORT, url_path=YOUR_WEBHOOK_PATH)
+    bot.setWebhook(f"https://YOUR_DOMAIN{YOUR_WEBHOOK_PATH}")
+    app.run(port=PORT)
