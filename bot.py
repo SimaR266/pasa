@@ -53,4 +53,3 @@ if __name__ == '__main__':
     dp.add_handler(CommandHandler('start', start))
     bot.start_webhook(listen="0.0.0.0", port=PORT, url_path=YOUR_WEBHOOK_PATH)
     bot.setWebhook(f"https://YOUR_DOMAIN{YOUR_WEBHOOK_PATH}")
-    app.run(port=PORT)
