@@ -1,0 +1,756 @@
+﻿<Window x:Class="ZitrontsScanner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="🚀 Zitronts Proxy Scanner V12 - Professional Edition" 
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Background="#0f172a"
+        FontFamily="Segoe UI"
+        Height="800" Width="1200">
+
+    <Window.Resources>
+        <!-- MODERN BUTON STYLE -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#1e293b"/>
+            <Setter Property="Foreground" Value="#e2e8f0"/>
+            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12 8"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#334155"/>
+                    <Setter Property="BorderBrush" Value="#64748b"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#475569"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- RIBBON BUTTON STYLE -->
+        <Style x:Key="RibbonButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#2563eb"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#1d4ed8"/>
+            <Setter Property="Padding" Value="15 10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <!-- TEXTBOX STYLE -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#1e293b"/>
+            <Setter Property="Foreground" Value="#e2e8f0"/>
+            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="CaretBrush" Value="#60a5fa"/>
+        </Style>
+
+        <!-- LABEL STYLE -->
+        <Style x:Key="SectionLabel" TargetType="Label">
+            <Setter Property="Foreground" Value="#94a3b8"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0 8 0 4"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. RIBBON TOOLBAR -->
+        <Border Grid.Row="0" 
+                Background="#1e293b"
+                BorderBrush="#334155" 
+                BorderThickness="0 0 0 1"
+                Padding="10">
+
+            <StackPanel Orientation="Horizontal">
+                <!-- LOGO & BAŞLIK -->
+                <StackPanel Orientation="Horizontal" Margin="0 0 20 0">
+                    <TextBlock Text="🚀" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Text="Zitronts" 
+                             FontSize="18" 
+                             FontWeight="Bold" 
+                             Foreground="#60a5fa"
+                             VerticalAlignment="Center"
+                             Margin="8 0 0 0"/>
+                    <TextBlock Text="Scanner V12" 
+                             FontSize="14"
+                             Foreground="#94a3b8"
+                             VerticalAlignment="Center"
+                             Margin="4 0 0 0"/>
+                </StackPanel>
+
+                <!-- TARAMA BUTONLARI -->
+                <StackPanel Orientation="Horizontal" Margin="10 0">
+                    <Button x:Name="btnStart" 
+                            Content="▶️ Başlat" 
+                            Style="{StaticResource RibbonButton}"
+                            Background="#10b981"
+                            BorderBrush="#059669"
+                            Width="100"/>
+
+                    <Button x:Name="btnStop" 
+                            Content="⏹️ Durdur" 
+                            Style="{StaticResource RibbonButton}"
+                            Background="#ef4444"
+                            BorderBrush="#dc2626"
+                            Width="100"
+                            Margin="8 0 0 0"
+                            IsEnabled="False"/>
+                </StackPanel>
+
+                <!-- ARAÇLAR BUTONLARI -->
+                <StackPanel Orientation="Horizontal" Margin="20 0">
+                    <Button x:Name="btnProxyScraper" 
+                            Content="🔧 Proxy Scraper" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"/>
+
+                    <Button x:Name="btnProxyUpdate" 
+                            Content="🔄 Güncel Proxy" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"
+                            Margin="8 0 0 0"/>
+
+                    <Button x:Name="btnDNSFinder" 
+                            Content="🔍 DNS Bul" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"
+                            Margin="8 0 0 0"/>
+
+                    <Button x:Name="btnIPTVPlayer" 
+                            Content="📺 IPTV Player" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"
+                            Margin="8 0 0 0"/>
+
+                    <Button x:Name="btnSpider" 
+                            Content="🕷️ Örümcek" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"
+                            Margin="8 0 0 0"/>
+
+                    <Button x:Name="btnTelegramTools" 
+                            Content="📱 Tele Tools" 
+                            Style="{StaticResource RibbonButton}"
+                            Width="120"
+                            Margin="8 0 0 0"/>
+                </StackPanel>
+
+                <!-- AYARLAR BUTONU -->
+                <Button x:Name="btnSettings" 
+                        Content="⚙️ Ayarlar" 
+                        Style="{StaticResource ModernButton}"
+                        Margin="20 0 0 0"
+                        Width="80"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 2. ANA İÇERİK -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.45*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- SOL PANEL -->
+            <ScrollViewer Grid.Column="0" 
+                         VerticalScrollBarVisibility="Auto"
+                         Padding="10">
+                <StackPanel>
+                    <!-- HEDEF AYARLARI -->
+                    <Border Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="12"
+                            Margin="0 0 0 10">
+                        <StackPanel>
+                            <TextBlock Text="🎯 Hedef Ayarları" 
+                                     Foreground="#60a5fa"
+                                     FontWeight="Bold"
+                                     FontSize="13"
+                                     Margin="0 0 0 8"/>
+
+                            <Label Content="DNS/M3U Adresi:" Style="{StaticResource SectionLabel}"/>
+                            <TextBox x:Name="txtTarget" 
+                                   Style="{StaticResource ModernTextBox}"
+                                   Text="panel.iptv.com:8080"/>
+
+                            <Label Content="Combo Dosyası:" Style="{StaticResource SectionLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtComboFile" 
+                                       Grid.Column="0"
+                                       Style="{StaticResource ModernTextBox}"/>
+                                <Button x:Name="btnBrowseCombo" 
+                                      Grid.Column="1"
+                                      Content="📁"
+                                      Margin="4 0 0 0"
+                                      Width="40"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- TARAMA AYARLARI -->
+                    <Border Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="12"
+                            Margin="0 0 0 10">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Tarama Ayarları" 
+                                     Foreground="#60a5fa"
+                                     FontWeight="Bold"
+                                     FontSize="13"
+                                     Margin="0 0 0 8"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Bot Sayısı:" Grid.Row="0" Grid.Column="0" Style="{StaticResource SectionLabel}"/>
+                                <TextBox x:Name="txtThreadCount" 
+                                       Grid.Row="0" Grid.Column="1"
+                                       Style="{StaticResource ModernTextBox}"
+                                       Text="10"/>
+
+                                <Label Content="Başlangıç Satırı:" Grid.Row="1" Grid.Column="0" Style="{StaticResource SectionLabel}"/>
+                                <TextBox x:Name="txtStartLine" 
+                                       Grid.Row="1" Grid.Column="1"
+                                       Style="{StaticResource ModernTextBox}"
+                                       Text="0"/>
+
+                                <Label Content="Timeout (sn):" Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionLabel}"/>
+                                <TextBox x:Name="txtTimeout" 
+                                       Grid.Row="2" Grid.Column="1"
+                                       Style="{StaticResource ModernTextBox}"
+                                       Text="7"/>
+                            </Grid>
+
+                            <CheckBox x:Name="chkGetCategories" 
+                                    Content="Kategori Bilgisi Al"
+                                    Foreground="#94a3b8"
+                                    Margin="0 10 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- PROXY AYARLARI -->
+                    <Border Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="12"
+                            Margin="0 0 0 10">
+                        <StackPanel>
+                            <TextBlock Text="🔗 Proxy Ayarları" 
+                                     Foreground="#60a5fa"
+                                     FontWeight="Bold"
+                                     FontSize="13"
+                                     Margin="0 0 0 8"/>
+
+                            <CheckBox x:Name="chkUseProxy" 
+                                    Content="Proxy Kullan"
+                                    Foreground="#94a3b8"/>
+
+                            <Label Content="Proxy Listesi:" Style="{StaticResource SectionLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtProxyFile" 
+                                       Grid.Column="0"
+                                       Style="{StaticResource ModernTextBox}"/>
+                                <Button x:Name="btnBrowseProxy" 
+                                      Grid.Column="1"
+                                      Content="📁"
+                                      Margin="4 0 0 0"
+                                      Width="40"/>
+                            </Grid>
+
+                            <Label Content="Proxy Türü:" Style="{StaticResource SectionLabel}"/>
+                            <ComboBox x:Name="cmbProxyType"
+                                      Background="#1e293b"
+                                      Foreground="#e2e8f0"
+                                      BorderBrush="#475569"
+                                      BorderThickness="1"
+                                      Padding="8"
+                                      FontSize="12">
+                                <ComboBoxItem Content="HTTP" IsSelected="True"/>
+                                <ComboBoxItem Content="SOCKS4"/>
+                                <ComboBoxItem Content="SOCKS5"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- GÜNCEL PROXY -->
+                    <Border Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="🔄 Güncel Proxy" 
+                                     Foreground="#60a5fa"
+                                     FontWeight="Bold"
+                                     FontSize="13"
+                                     Margin="0 0 0 8"/>
+
+                            <Button x:Name="btnUpdateProxy" 
+                                  Content="Her Zaman Güncel Proxy Ayarları"
+                                  Background="#f59e0b"
+                                  BorderBrush="#d97706"
+                                  Foreground="White"
+                                  FontWeight="Bold"
+                                  Padding="12"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- ORTA PANEL -->
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- BAŞLIK -->
+                <Border Grid.Row="0" 
+                        Background="#1e293b"
+                        BorderBrush="#334155"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12"
+                        Margin="0 0 0 10">
+                    <TextBlock Text="🤖 BOT DURUM EKRANI" 
+                             Foreground="#60a5fa"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- İSTATİSTİK KARTLARI -->
+                <Grid Grid.Row="1" Margin="0 0 0 10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- İLERLEME -->
+                    <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="0 0 5 5">
+                        <StackPanel>
+                            <TextBlock Text="📈 İLERLEME" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtProgress" 
+                                     Text="0/0 (0%)"
+                                     Foreground="#60a5fa"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     Margin="0 4 0 0"/>
+                            <ProgressBar x:Name="progressBar" 
+                                       Height="6"
+                                       Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- HIZ -->
+                    <Border Grid.Row="0" Grid.Column="2"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="5 0 5 5">
+                        <StackPanel>
+                            <TextBlock Text="⚡ HIZ" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtSpeed" 
+                                     Text="0 CPM"
+                                     Foreground="#ef4444"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BAŞARI -->
+                    <Border Grid.Row="0" Grid.Column="3"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="5 0 0 5">
+                        <StackPanel>
+                            <TextBlock Text="✅ BAŞARI" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtSuccess" 
+                                     Text="0%"
+                                     Foreground="#10b981"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- HİTLER -->
+                    <Border Grid.Row="0" Grid.Column="4"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="0 0 0 5">
+                        <StackPanel>
+                            <TextBlock Text="🎯 HİTLER" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtHits" 
+                                     Text="0"
+                                     Foreground="#f59e0b"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- SÜRE -->
+                    <Border Grid.Row="1" Grid.Column="0"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="0 5 5 0">
+                        <StackPanel>
+                            <TextBlock Text="⏱️ SÜRE" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtTime" 
+                                     Text="00:00:00"
+                                     Foreground="#8b5cf6"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- AKTİF BOTLAR -->
+                    <Border Grid.Row="1" Grid.Column="1"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="5 5 5 0">
+                        <StackPanel>
+                            <TextBlock Text="🤖 BOTLAR" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtActiveBots" 
+                                     Text="0/10"
+                                     Foreground="#3498db"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- TEST EDİLEN -->
+                    <Border Grid.Row="1" Grid.Column="2"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="5 5 5 0">
+                        <StackPanel>
+                            <TextBlock Text="🔍 TEST EDİLEN" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtTested" 
+                                     Text="0"
+                                     Foreground="#9b59b6"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BAŞARI ORANI -->
+                    <Border Grid.Row="1" Grid.Column="3"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="5 5 0 0">
+                        <StackPanel>
+                            <TextBlock Text="📊 ORAN" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtRate" 
+                                     Text="0.00%"
+                                     Foreground="#e74c3c"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- KALAN SÜRE -->
+                    <Border Grid.Row="1" Grid.Column="4"
+                            Background="#1e293b"
+                            BorderBrush="#334155"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="8"
+                            Margin="0 5 0 0">
+                        <StackPanel>
+                            <TextBlock Text="⏳ KALAN" 
+                                     Foreground="#94a3b8"
+                                     FontSize="10"
+                                     FontWeight="Bold"/>
+                            <TextBlock x:Name="txtRemaining" 
+                                     Text="00:00:00"
+                                     Foreground="#2ecc71"
+                                     FontSize="14"
+                                     FontWeight="Bold"
+                                     HorizontalAlignment="Center"
+                                     Margin="0 4 0 0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- GERÇEK ZAMANLI LOG -->
+                <Border Grid.Row="2"
+                        Background="#1e293b"
+                        BorderBrush="#334155"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 8">
+                            <TextBlock Text="📝 GERÇEK ZAMANLI LOG" 
+                                     Foreground="#60a5fa"
+                                     FontWeight="Bold"
+                                     FontSize="13"/>
+
+                            <Button x:Name="btnClearLog" 
+                                    Content="🗑️ Temizle"
+                                    Background="Transparent"
+                                    Foreground="#94a3b8"
+                                    BorderThickness="0"
+                                    Padding="8 2"
+                                    Margin="20 0 0 0"
+                                    FontSize="10"
+                                    Cursor="Hand"/>
+
+                            <Button x:Name="btnCopyLog" 
+                                    Content="📋 Kopyala"
+                                    Background="Transparent"
+                                    Foreground="#94a3b8"
+                                    BorderThickness="0"
+                                    Padding="8 2"
+                                    Margin="5 0 0 0"
+                                    FontSize="10"
+                                    Cursor="Hand"/>
+
+                            <CheckBox x:Name="chkAutoScroll" 
+                                      Content="Otomatik Scroll"
+                                      Foreground="#94a3b8"
+                                      IsChecked="True"
+                                      Margin="20 0 0 0"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <TextBox x:Name="txtRealTimeLog" 
+                               Grid.Row="1"
+                               Background="#1e293b"
+                               Foreground="#e2e8f0"
+                               BorderBrush="#475569"
+                               BorderThickness="1"
+                               Padding="8"
+                               IsReadOnly="True"
+                               VerticalScrollBarVisibility="Auto"
+                               HorizontalScrollBarVisibility="Auto"
+                               FontFamily="Consolas"
+                               FontSize="10"
+                               TextWrapping="NoWrap">
+                            <TextBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Kopyala"/>
+                                    <MenuItem Header="Tümünü Seç"/>
+                                    <MenuItem Header="Temizle"/>
+                                    <Separator/>
+                                    <MenuItem Header="Dosyaya Kaydet..."/>
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- SAĞ PANEL -->
+            <Grid Grid.Column="2" Margin="10 10 10 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- BOT AKTİVİTE LOG -->
+                <Border Grid.Row="0" 
+                        Background="#1e293b"
+                        BorderBrush="#334155"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12"
+                        Margin="0 0 0 10">
+                    <StackPanel>
+                        <TextBlock Text="🤖 Bot Takip Ekranı" 
+                                 Foreground="#60a5fa"
+                                 FontWeight="Bold"
+                                 FontSize="13"
+                                 Margin="0 0 0 8"/>
+
+                        <TextBox x:Name="txtBotActivity" 
+                               Style="{StaticResource ModernTextBox}"
+                               Height="200"
+                               IsReadOnly="True"
+                               VerticalScrollBarVisibility="Auto"
+                               FontFamily="Consolas"
+                               FontSize="10"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- PROXY BİLGİLERİ -->
+                <Border Grid.Row="1" 
+                        Background="#1e293b"
+                        BorderBrush="#334155"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="12">
+                    <StackPanel>
+                        <TextBlock Text="🔄 Güncel Proxy Bilgileri" 
+                                 Foreground="#60a5fa"
+                                 FontWeight="Bold"
+                                 FontSize="13"
+                                 Margin="0 0 0 8"/>
+
+                        <TextBox x:Name="txtProxyInfo" 
+                               Style="{StaticResource ModernTextBox}"
+                               Height="150"
+                               IsReadOnly="True"
+                               VerticalScrollBarVisibility="Auto"
+                               FontFamily="Consolas"
+                               FontSize="10"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- 3. STATUS BAR -->
+        <Border Grid.Row="2" 
+                Background="#1e293b"
+                BorderBrush="#334155" 
+                BorderThickness="1 0 0 0"
+                Padding="10 6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="txtStatus" 
+                         Text="🚀 Zitronts Proxy Scanner V12 - Hazır"
+                         Foreground="#94a3b8"
+                         FontSize="11"/>
+
+                <TextBlock Grid.Column="2" 
+                         Text="Developed with ❤️"
+                         Foreground="#64748b"
+                         FontSize="10"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
