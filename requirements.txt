@@ -1,7 +1,0 @@
-requests==2.25.1
-urllib3==1.26.5
-beautifulsoup4==4.9.1
-Flask==2.1.0
-gunicorn
-pyTelegramBotAPI==3.7.3
-python-telegram-bot==13.13
